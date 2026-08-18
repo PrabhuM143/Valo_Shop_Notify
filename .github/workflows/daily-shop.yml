@@ -1,0 +1,38 @@
+name: VALORANT Daily Shop
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 0 * * *"
+      timezone: "Asia/Kolkata"
+
+jobs:
+  daily-shop:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run daily shop checker
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
+
+          RIOT_ACCOUNT_1_COOKIES: ${{ secrets.RIOT_ACCOUNT_1_COOKIES }}
+          RIOT_ACCOUNT_2_COOKIES: ${{ secrets.RIOT_ACCOUNT_2_COOKIES }}
+          RIOT_ACCOUNT_3_COOKIES: ${{ secrets.RIOT_ACCOUNT_3_COOKIES }}
+
+        run: node dailyShopCheck.js
