@@ -1,0 +1,8 @@
+services:
+  - type: cron
+    name: skinpeek-daily-shop
+    runtime: node
+    schedule: "30 18 * * *" # 18:30 UTC = 00:00 IST (Daily VALORANT shop reset)
+    buildCommand: npm install
+    startCommand: node dailyShopCheck.js
+    plan: starter

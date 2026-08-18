@@ -1,0 +1,8 @@
+data/*
+config.json
+node_modules/
+.env
+.env.local
+*.local.json
+cookies.json
+logs/
