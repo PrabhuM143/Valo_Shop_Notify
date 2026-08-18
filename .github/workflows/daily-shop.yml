@@ -27,6 +27,39 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create SkinPeek config
+        run: |
+          cat > config.json <<'EOF'
+          {
+            "token": "${{ secrets.SKINPEEK_TOKEN }}",
+            "fetchSkinPrices": true,
+            "fetchSkinRarities": true,
+            "localiseSkinNames": true,
+            "linkItemImage": true,
+            "useEmojisFromServer": "",
+            "refreshSkins": "10 0 0 * * *",
+            "checkGameVersion": "*/15 * * * *",
+            "cleanupAccounts": "0 * * * *",
+            "delayBetweenAlerts": 5000,
+            "alertsPerPage": 10,
+            "emojiCacheExpiration": 10000,
+            "useLoginQueue": false,
+            "loginQueue": "*/2 * * * * *",
+            "loginRetryTimeout": 600000,
+            "useShopQueue": true,
+            "shopQueue": "*/1 * * * * *",
+            "storePasswords": false,
+            "trackStoreStats": false,
+            "statsExpirationDays": 14,
+            "statsPerPage": 8,
+            "ownerId": "",
+            "ownerName": "",
+            "status": "Up and running!",
+            "logToChannel": "",
+            "logFrequency": "*/10 * * * * *"
+          }
+          EOF
+
       - name: Run daily shop checker
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
