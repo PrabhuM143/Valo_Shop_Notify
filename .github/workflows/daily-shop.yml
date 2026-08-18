@@ -2,6 +2,7 @@ name: VALORANT Daily Shop
 
 on:
   workflow_dispatch:
+
   schedule:
     - cron: "10 0 * * *"
       timezone: "Asia/Kolkata"
@@ -15,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
