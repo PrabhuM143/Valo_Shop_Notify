@@ -2,15 +2,14 @@ name: VALORANT Daily Shop
 
 on:
   workflow_dispatch:
-
   schedule:
-    - cron: "30 5 * * *"
+    # 6:37 AM IST every day
+    - cron: "37 6 * * *"
       timezone: "Asia/Kolkata"
 
 jobs:
   daily-shop:
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
 
@@ -60,13 +59,21 @@ jobs:
           }
           EOF
 
+      - name: Show execution time
+        run: |
+          echo "========================================"
+          echo "Scheduled VALORANT Daily Shop execution"
+          echo "UTC time:"
+          date -u
+          echo "IST time:"
+          TZ=Asia/Kolkata date
+          echo "========================================"
+
       - name: Run daily shop checker
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
-
           RIOT_ACCOUNT_1_COOKIES: ${{ secrets.RIOT_ACCOUNT_1_COOKIES }}
           RIOT_ACCOUNT_2_COOKIES: ${{ secrets.RIOT_ACCOUNT_2_COOKIES }}
           RIOT_ACCOUNT_3_COOKIES: ${{ secrets.RIOT_ACCOUNT_3_COOKIES }}
-
         run: node dailyShopCheck.js
